@@ -7,7 +7,7 @@
 
 namespace MultiLanguage;
 
-final class MultiLanguage
+class MultiLanguage
 {
     private static string $directoryPath = "";
     private static array $allowedLanguages = [];
@@ -30,31 +30,31 @@ final class MultiLanguage
     ): string
     {
         if (empty($lang)) {
-            if (!self::getCurrentLanguage() && !self::getDefaultLanguage()) {
+            if (!static::getCurrentLanguage() && !static::getDefaultLanguage()) {
                 throw new LanguageException("The current language and the default language have not been set before.");
             }
-            $lang = self::getCurrentLanguage() ?: self::getDefaultLanguage();
+            $lang = static::getCurrentLanguage() ?: static::getDefaultLanguage();
         }
 
-        if (!self::isAllowedLanguage($lang)) {
+        if (!static::isAllowedLanguage($lang)) {
             throw new LanguageException("Language '$lang' is not allowed.");
         }
 
-        if (!self::isDirectoryExist(self::getDirectoryPath())) {
+        if (!static::isDirectoryExist(static::getDirectoryPath())) {
             throw new LanguageException("Language directory doesn't exist.");
 
         }
-        if (!self::isFileExist($lang)) {
+        if (!static::isFileExist($lang)) {
             throw new LanguageException("Language file '$lang' doesn't exist.");
         }
 
-        $raw = self::getRaw($lang);
+        $raw = static::getRaw($lang);
         if (!$raw) {
             throw new LanguageException("Failed to read raw data.");
         }
 
-        $data = self::getData($raw);
-        if (!$data && $lang != self::getDefaultLanguage()) {
+        $data = static::getData($raw);
+        if (!$data && $lang != static::getDefaultLanguage()) {
             throw new LanguageException("Failed to get array data.");
         }
 
@@ -70,7 +70,7 @@ final class MultiLanguage
      */
     public static function getDirectoryPath(): string
     {
-        return self::$directoryPath;
+        return static::$directoryPath;
     }
 
     /**
@@ -81,12 +81,12 @@ final class MultiLanguage
      */
     public static function setDirectoryPath(string $directoryPath, bool $force = false): void
     {
-        if (!self::isDirectoryExist($directoryPath)) {
+        if (!static::isDirectoryExist($directoryPath)) {
             if (!$force)
                 throw new LanguageException("Language directory doesn't exist.");
             mkdir($directoryPath);
         }
-        self::$directoryPath = $directoryPath;
+        static::$directoryPath = $directoryPath;
     }
 
     /**
@@ -94,7 +94,7 @@ final class MultiLanguage
      */
     public static function getAllowedLanguages(): array
     {
-        return self::$allowedLanguages;
+        return static::$allowedLanguages;
     }
 
     /**
@@ -103,7 +103,7 @@ final class MultiLanguage
      */
     public static function setAllowedLanguages(array $languages): void
     {
-        self::$allowedLanguages = $languages;
+        static::$allowedLanguages = $languages;
     }
 
     /**
@@ -111,7 +111,7 @@ final class MultiLanguage
      */
     public static function getDefaultLanguage(): string
     {
-        return self::$defaultLanguage;
+        return static::$defaultLanguage;
     }
 
     /**
@@ -121,10 +121,10 @@ final class MultiLanguage
      */
     public static function setDefaultLanguage(string $lang): void
     {
-        if (!self::isAllowedLanguage($lang)) {
+        if (!static::isAllowedLanguage($lang)) {
             throw new LanguageException("Language '$lang' is not allowed.");
         }
-        self::$defaultLanguage = $lang;
+        static::$defaultLanguage = $lang;
     }
 
     /**
@@ -132,7 +132,7 @@ final class MultiLanguage
      */
     public static function getCurrentLanguage(): string
     {
-        return self::$currentLanguage;
+        return static::$currentLanguage;
     }
 
     /**
@@ -141,7 +141,7 @@ final class MultiLanguage
      */
     public static function setCurrentLanguage(string $lang): void
     {
-        self::$currentLanguage = $lang;
+        static::$currentLanguage = $lang;
     }
 
     /**
@@ -150,7 +150,7 @@ final class MultiLanguage
      */
     public static function isAllowedLanguage(string $lang): bool
     {
-        return in_array($lang, self::getAllowedLanguages());
+        return in_array($lang, static::getAllowedLanguages());
     }
 
     /**
@@ -168,7 +168,7 @@ final class MultiLanguage
      */
     protected static function isFileExist(string $language): bool
     {
-        return is_file(self::getDirectoryPath() . DIRECTORY_SEPARATOR . "$language.json");
+        return is_file(static::getDirectoryPath() . DIRECTORY_SEPARATOR . "$language.json");
     }
 
     /**
@@ -177,7 +177,7 @@ final class MultiLanguage
      */
     protected static function getRaw(string $language): false|string
     {
-        return @file_get_contents(self::getDirectoryPath() . DIRECTORY_SEPARATOR . "$language.json");
+        return @file_get_contents(static::getDirectoryPath() . DIRECTORY_SEPARATOR . "$language.json");
     }
 
     /**
