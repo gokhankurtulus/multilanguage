@@ -9,10 +9,10 @@ namespace MultiLanguage;
 
 class MultiLanguage
 {
-    private static string $directoryPath = "";
-    private static array $allowedLanguages = [];
-    private static string $defaultLanguage = "";
-    private static string $currentLanguage = "";
+    protected static string $directoryPath = "";
+    protected static array $allowedLanguages = [];
+    protected static string $defaultLanguage = "";
+    protected static string $currentLanguage = "";
 
     /**
      * @param string $text text key to translate.
