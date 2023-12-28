@@ -1,0 +1,24 @@
+{
+  "name": "gokhankurtulus/multilanguage",
+  "description": "A simple PHP library for multi-language projects.",
+  "keywords": [
+    "multi language"
+  ],
+  "type": "library",
+  "license": "MIT",
+  "autoload": {
+    "psr-4": {
+      "MultiLanguage\\": "src/"
+    }
+  },
+  "authors": [
+    {
+      "name": "gokhankurtulus",
+      "email": "gokhan@gokhankurtulus.com",
+      "homepage": "https://github.com/gokhankurtulus"
+    }
+  ],
+  "require": {
+    "php": "^8.0 || ^8.1 || ^8.2"
+  }
+}
