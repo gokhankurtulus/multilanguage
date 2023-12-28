@@ -138,9 +138,13 @@ class MultiLanguage
     /**
      * @param string $lang
      * @return void
+     * @throws LanguageException
      */
     public static function setCurrentLanguage(string $lang): void
     {
+        if (!static::isAllowedLanguage($lang)) {
+            throw new LanguageException("Language '$lang' is not allowed.");
+        }
         static::$currentLanguage = $lang;
     }
 
